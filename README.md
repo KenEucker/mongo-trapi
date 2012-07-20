@@ -7,6 +7,7 @@ A transparent mongo db restful api in for Node.js
 installation
 ===========
 You need Node.js installed on your machine to run this node_module
+The source contains everything else you need to get started, including mongodb.
 
 npm install mongo-trapi
 
