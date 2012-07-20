@@ -1,0 +1,40 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Rest</title>
+  <script src="http://code.jquery.com/jquery.min.js"></script>
+  <script src="./js/seven20.js"></script>
+  
+  <link href="./css/bootstrap.css" rel="stylesheet" type="text/css" />
+  <style type="text/css">
+  </style>
+  <script>
+	$().ready(function(){
+		loadData('http://localhost',8080, '/content/',insertData);
+	});
+	
+	function insertData(data){
+	$('#info p').html(data);
+	}
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="span12">
+        <h1>Seven20</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span3">
+        <p>Some information.</p>
+      </div>
+
+      <div id="info" class="span9">
+        <p></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
