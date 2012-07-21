@@ -9,26 +9,18 @@
     <meta name="author" content="epic720">
 
     <script src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="./scripts/seven20.js"></script>
-    <script src="./scripts/helper.bootstrap.js"></script>
+    <script src="./scripts/jquery.seven20.js"></script>
+    <script src="./scripts/jquery.seven20.grid.js"></script>
+    <script src="./scripts/jquery.seven20.editor.js"></script>
+    <script src="./scripts/bootstrap.helper.js"></script>
 
 
     <script>
 
         var client;
         $().ready(function(){
-//            client = restify.createJsonClient({
-//                url: 'http://localhost:8080/',
-//                version: '*'
-//            });
-
             bootstrapNav('#nav', 'Seven20');
-            //loadData('http://localhost',8080, '/hello/ken',insertData);
         });
-
-        //	function insertData(data){
-        //		$('#info p').html(data);
-        //	}
 
         function doGet()
         {
