@@ -1,0 +1,1 @@
+start /k "node server.js"
