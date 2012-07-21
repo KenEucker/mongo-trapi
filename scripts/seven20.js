@@ -1,4 +1,4 @@
-function getData(request, callback, host, data, port)
+function getData(request, callback, data, host, port)
 {
     makeAjax(request, callback, "GET", data, host, port);
 }
@@ -26,6 +26,8 @@ function makeAjax(request, callback, type, data, host, port)
         url:host + ':' + port + request,
         type: type,
         data: data,
+        //dataType:'json',
+        //contentType: 'Content-Type: application/json',
         success:function(data){callback(data);},
         error:function(xhr, textStatus, errorThrown)
         { callback('ajax request failure:' + textStatus + '\nxhr:' +  xhr + '\nerror:' + errorThrown);}

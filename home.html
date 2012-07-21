@@ -32,12 +32,16 @@
 
         function doGet()
         {
-            getData(doParse(), insertData);
+            var data = undefined;
+            if( $('#text').val() !== '')
+                data  = {text:$('#text').val()};
+
+            getData(doParse(), insertData, data);
         }
 
         function doSet()
         {
-            var data = {doc:{text:'does it work?', success:true}}
+            var data = { text: $('#text').val()};
             setData(doParse(), insertData, data);
         }
 
@@ -83,7 +87,7 @@
             }
             else
             {
-                $("#viewer").html(data);
+                displayItem(data);
             }
         }
     </script>
@@ -132,6 +136,7 @@
                 <p><a class="btn btn-primary btn-large" href="">Learn more &raquo;</a></p>
                 <p>Collection <input id="collection" type="text" class="span3" placeholder="Enter your name..."></p>
                 <p>ID <input id="id" type="text" class="span3" placeholder="Enter your name..."></p>
+                <p>Text <input id="text" type="text" class="span3" placeholder="Enter some text..."></p>
             </div>
             <div class="row-fluid">
                 <div class="span4">

@@ -3,15 +3,16 @@ var mongo = require('mongoskin');
 var db = mongo.db('localhost:27017/seven20?auto_reconnect');
 
 function getDataV1(req, res, next) {
+    //req.setEncoding('utf8');
     console.log('GET /' + req.params.name);
     console.log('id: ' + req.params.id);
-    console.log('query:' + req.query.find);
+    console.log('data: ' + req.body);
 
     if(req.params.name !== undefined)
     {
-        if(req.query.find !== undefined && req.query.find !=='')
+        if(req.body !== undefined)
         {
-            findDataFromDb(res, req.params.name, JSON.parse(req.query.find));
+            findDataFromDb(res, req.params.name, req.body);
         }
         else
         {
@@ -25,12 +26,18 @@ function getDataV1(req, res, next) {
 }
 
 function setDataV1(req, res, next) {
+    //req.setEncoding('utf8');
     console.log('PUT /' + req.params.name);
-    console.log('document: ' + req.params.doc);
+    console.log('id: ' + req.params.id);
+    console.log('data: ' + req.body);
 
     if(req.params.name !== undefined)
     {
-        setDataInDb(res, req.params.name, req.params.doc);
+//        if(req.params.id !== undefined)
+//        {
+//            req.body["_id"] = req.params.id;
+//        }
+        setDataInDb(res, req.params.name, req.body);
     }
     else
     {
@@ -41,7 +48,6 @@ function setDataV1(req, res, next) {
 function deleteDataV1(req, res, next) {
     console.log('DELETE /' + req.params.name);
     console.log('id: ' + req.params.id);
-    console.log('document: ' + req.params.doc);
 
     if(req.params.name !== undefined)
     {
@@ -110,19 +116,20 @@ function send(req, res, next) {
     return next();
 }
 
-function configureRestfulRoute(version, base, modifier, get, post, del, put, head)
+function configureRestfulRoute(version, base, modifier, get, post, del, head)
 {
     var fullPath = base + modifier;
 
     if(head !== undefined) { server.head({path: fullPath, version: version}, head); }
-    if(put !== undefined) { server.put({path: fullPath, version: version}, put); }
+    if(post !== undefined) { server.put({path: fullPath, version: version}, post);
+                            server.post({path: fullPath, version: version}, post); }
     if(get !== undefined) { server.get({path: fullPath, version: version}, get); }
-    if(post !== undefined) { server.post({path: fullPath, version: version}, post); }
     if(del !== undefined) { server.del({path: fullPath, version: version},del); }
 }
 
 var server = restify.createServer();
 server.use(restify.queryParser());
+server.use(restify.bodyParser({mapParams: false}));
 
 configureRestfulRoute('1.0.0', '/_id', '', getDataV1, setDataV1, deleteDataV1);
 configureRestfulRoute('1.0.0', '/d', '/:name', getDataV1, setDataV1, deleteDataV1);
