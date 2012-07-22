@@ -65,8 +65,15 @@ function deleteDataV1(req, res, next) {
 
     if(req.params.name !== undefined)
     {
-        var data = JSON.parse(req.params.find);
-        deleteDataFromDb(res, req.params.name, req.params.id, makeIdSafe(data));
+        if(req.params.find !== undefined)
+        {
+            var data = JSON.parse(req.params.find);
+            deleteDataFromDb(res, req.params.name, req.params.id, makeIdSafe(data));
+        }
+        else
+        {
+            deleteDataFromDb(res, req.params.name, req.params.id);
+        }
     }
     else
     {
@@ -106,7 +113,7 @@ function deleteDataFromDb(res, collection, id, data)
 {
     if(id !== undefined)
     {
-        db.collection(collection).removeById({_id:id}, {}, function(err, result) {
+        db.collection(collection).removeById(id, function(err, result) {
             sendResultV1(res, err, result);
         });
     }
