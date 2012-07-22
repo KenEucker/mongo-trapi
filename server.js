@@ -7,12 +7,13 @@ function getDataV1(req, res, next) {
     console.log('GET /' + req.params.name);
     console.log('id: ' + req.params.id);
     console.log('data: ' + req.body);
+    console.log('find: ' + req.params.find);
 
     if(req.params.name !== undefined)
     {
-        if(req.body !== undefined)
+        if(req.params.find !== undefined)
         {
-            findDataFromDb(res, req.params.name, req.body);
+            findDataFromDb(res, req.params.name, makeIdSafe(JSON.parse(req.params.find)));
         }
         else
         {
@@ -22,6 +23,16 @@ function getDataV1(req, res, next) {
     else
     {
         res.send('Enter the content name');
+    }
+}
+
+function makeIdSafe(obj){
+    if(obj._id !== undefined)
+    {
+        if(obj._id === '')
+        {
+            delete obj._id;
+        }
     }
 }
 
@@ -37,7 +48,8 @@ function setDataV1(req, res, next) {
 //        {
 //            req.body["_id"] = req.params.id;
 //        }
-        setDataInDb(res, req.params.name, req.body);
+
+        setDataInDb(res, req.params.name, makeIdSafe(req.body));
     }
     else
     {

@@ -26,14 +26,18 @@
         {
             var data = undefined;
             if( $('#text').val() !== '')
-                data  = {text:$('#text').val()};
-
-            getData(doParse(), insertData, data);
+            {
+                data = { text: $('#text').val(), _id:$('#id').val()};
+                getData(doParse() + '?find=' + JSON.stringify(data), insertData);
+            }
+            else
+                getData(doParse(), insertData);
         }
 
         function doSet()
         {
-            var data = { text: $('#text').val()};
+            var data = { text: $('#text').val(), _id:$('#id').val()};
+
             setData(doParse(), insertData, data);
         }
 
