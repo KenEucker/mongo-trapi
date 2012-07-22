@@ -24,10 +24,9 @@
 
         function doGet()
         {
-            var data = undefined;
             if( $('#text').val() !== '')
             {
-                data = { text: $('#text').val(), _id:$('#id').val()};
+                var data = { text: $('#text').val(), _id:$('#id').val()};
                 getData(doParse() + '?find=' + JSON.stringify(data), insertData);
             }
             else
@@ -53,8 +52,15 @@
 
         function doDelete()
         {
-            deleteData(doParse(), insertData);
+            if( $('#text').val() !== '')
+            {
+                var data = { text: $('#text').val(), _id:$('#id').val()};
+                deleteData(doParse() + '?find=' + JSON.stringify(data), insertData);
+            }
+            else
+                deleteData(doParse(), insertData);
         }
+
         function displayItem(item)
         {
             $("#viewer").append('<p>');

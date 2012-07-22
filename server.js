@@ -13,7 +13,8 @@ function getDataV1(req, res, next) {
     {
         if(req.params.find !== undefined)
         {
-            findDataFromDb(res, req.params.name, makeIdSafe(JSON.parse(req.params.find)));
+            var data = JSON.parse(req.params.find);
+            findDataFromDb(res, req.params.name, makeIdSafe(data));
         }
         else
         {
@@ -29,11 +30,11 @@ function getDataV1(req, res, next) {
 function makeIdSafe(obj){
     if(obj._id !== undefined)
     {
-        if(obj._id === '')
-        {
+        if(obj._id === "")
             delete obj._id;
-        }
     }
+
+    return obj;
 }
 
 function setDataV1(req, res, next) {
@@ -60,10 +61,12 @@ function setDataV1(req, res, next) {
 function deleteDataV1(req, res, next) {
     console.log('DELETE /' + req.params.name);
     console.log('id: ' + req.params.id);
+    console.log('find: ' + req.params.find);
 
     if(req.params.name !== undefined)
     {
-        deleteDataFromDb(res, req.params.name, req.params.id);
+        var data = JSON.parse(req.params.find);
+        deleteDataFromDb(res, req.params.name, req.params.id, makeIdSafe(data));
     }
     else
     {
@@ -99,11 +102,17 @@ function setDataInDb(res, collection, data)
     });
 }
 
-function deleteDataFromDb(res, collection, id)
+function deleteDataFromDb(res, collection, id, data)
 {
     if(id !== undefined)
     {
         db.collection(collection).removeById({_id:id}, {}, function(err, result) {
+            sendResultV1(res, err, result);
+        });
+    }
+    else if(data !== undefined)
+    {
+        db.collection(collection).remove(data, {}, function(err, result) {
             sendResultV1(res, err, result);
         });
     }
