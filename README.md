@@ -16,9 +16,10 @@ quickstart
 ===========
 mongodb
 
+this project requires a local mongodb connection, the batch file expects that mongodb be installed in a folder in the root called mongodb
 create a folder in the working directory called 'data'
-run the batch script 'run mongo server.bat'
-that should start mongo and create a database for you in the /data folder
+
+*Windows: run the batch script 'WinStartMongo.bat' that should start mongo and create a database for you in the /data folder
 
 mongo-trapi
 
