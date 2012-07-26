@@ -6,11 +6,14 @@ A transparent mongo db restful api in for Node.js
 
 installation
 ===========
-You need Node.js installed on your machine to run this node_module
+You need Node.js installed on your machine to run this node_module http://nodejs.org/#download
 The source contains everything else you need to get started, including mongodb.
 
-npm install mongo-trapi
+npm install mongo-trapi **not yet published
 
+You also need mongodb: http://www.mongodb.org/downloads
+
+Once Node.js is installed you should be able to run mongo-trapi and connect to a mongodb instance
 
 quickstart
 ===========
@@ -24,6 +27,8 @@ create a folder in the working directory called 'data'
 mongo-trapi
 
 run the batch script 'run node server.bat'
+
+If a localhost mongo server is running, mongo-trapi will attempt to connect to a database called seven20.
 
 license
 ===========
