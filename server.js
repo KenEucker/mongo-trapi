@@ -1,9 +1,9 @@
 var restify = require('restify');
 var mongo = require('mongoskin');
+var ObjectID = require('mongodb').ObjectID;
 var db = mongo.db('localhost:27017/seven20?auto_reconnect');
 
 function getDataV1(req, res, next) {
-    //req.setEncoding('utf8');
     console.log('GET /' + req.params.name);
     console.log('id: ' + req.params.id);
     console.log('data: ' + req.body);
@@ -32,6 +32,11 @@ function makeIdSafe(obj){
     {
         if(obj._id === "")
             delete obj._id;
+		else
+		{
+			var temp = new ObjectID(obj._id);
+			obj._id = temp;
+		}
     }
 
     return obj;
@@ -45,11 +50,6 @@ function setDataV1(req, res, next) {
 
     if(req.params.name !== undefined)
     {
-//        if(req.params.id !== undefined)
-//        {
-//            req.body["_id"] = req.params.id;
-//        }
-
         setDataInDb(res, req.params.name, makeIdSafe(req.body));
     }
     else
