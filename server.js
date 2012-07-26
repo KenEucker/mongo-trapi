@@ -21,6 +21,10 @@ function getDataV1(req, res, next) {
             getDataFromDb(res, req.params.name, req.params.id);
         }
     }
+    else if(req.params.id !== undefined)
+    {
+        getDataFromDb(res, req.params.name, req.params.id);
+    }
     else
     {
         res.send('Enter the content name');
@@ -90,9 +94,16 @@ function getDataFromDb(res, collection, id)
 {
     if(id !== undefined)
     {
-        db.collection(collection).find({_id:db.bson_serializer.ObjectID.createFromHexString(id)}).toArray(function(err, result) {
-            sendResultV1(res, err, result);
-        });
+        if(collection === undefined)
+        {
+
+        }
+        else
+        {
+            db.collection(collection).find({_id:db.bson_serializer.ObjectID.createFromHexString(id)}).toArray(function(err, result) {
+                sendResultV1(res, err, result);
+            });
+        }
     }
     else
     {
@@ -159,7 +170,7 @@ var server = restify.createServer();
 server.use(restify.queryParser());
 server.use(restify.bodyParser({mapParams: false}));
 
-configureRestfulRoute('1.0.0', '/_id', '', getDataV1, setDataV1, deleteDataV1);
+configureRestfulRoute('1.0.0', '/_id/:id', '', getDataV1, setDataV1, deleteDataV1);
 configureRestfulRoute('1.0.0', '/d', '/:name', getDataV1, setDataV1, deleteDataV1);
 configureRestfulRoute('1.0.0', '/d', '/:name/:id', getDataV1, setDataV1, deleteDataV1);
 
