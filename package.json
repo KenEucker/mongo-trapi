@@ -1,7 +1,7 @@
 {
   "subdomain": "epic720.seven20",
   "scripts": {
-    "start": "server.js"
+    "start": "docker-compose up -d && node server.js"
   },
   "version": "0.0.0-2",
   "engines": {
@@ -10,8 +10,9 @@
   "author": "Ken Eucker <keneucker@gmail.com>",
   "description": "a database as a service with ecosystem",
   "dependencies": {
-    "restify": ">=1.4.3",
-    "mongoskin": ">=0.3.7"
+    "mongodb": "^3.2.7",
+    "monk": "^7.0.0",
+    "restify": "^8.3.3"
   },
   "name": "seven20"
 }
